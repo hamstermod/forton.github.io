@@ -1,0 +1,640 @@
+*{
+    border: none;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    font-family: Arial, sans-serif;
+}
+body{
+    background-color: black;
+
+}
+header{
+    width: 100%;
+
+}
+.flex{
+    display: flex;
+}
+#logo{
+    width: 150px;
+}
+#app{
+    padding: 20px;
+}
+
+ :root {
+     --bg-color: #121a2b;
+     --text-color: #eaf2ff;
+     --accent: #3aa0ff;
+     --red: #ff5c7a;
+     --green: #29d398;
+     --blue: #2b79ff;
+     --diamond-size: 40px;
+     --border-radius: 8px;
+     --button-color: #ff7a3d;
+     --bg: #faf6f2;
+     --card: #fff9f6;
+     --text: #3a2d29;
+     --muted: #8b7e7b;
+     --success-bg: #d9f2d4;
+     --success-text: #2b7a0b;
+     --danger-bg: #fddede;
+     --danger-text: #d90429;
+     --btn-bg: linear-gradient(90deg, #00FF84, #00CFFF);
+     --btn-color: white;
+ }
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.rolling-in {
+    background-color: var(--accent);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+}
+
+.timer {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.diamond-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.diamond {
+    width: var(--diamond-size);
+    height: var(--diamond-size);
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.blue-diamond {
+    background-image: url('/images/blueDiamond.png'); /* Replace with the actual path */
+}
+
+.red-diamond {
+    background-image: url('/images/redDiamond.png'); /* Replace with the actual path */
+}
+
+.green-diamond {
+    background-image: url('/images/greenDiamond.png'); /* Replace with the actual path */
+}
+.rolling-bar {
+    background: #1e2738;
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.rolling-bar .progress {
+    background: #28c76f;
+    height: 25px;
+    width: 100%;
+    text-align: center;
+    line-height: 25px;
+    color: #fff;
+}
+
+.diamonds {
+    position: relative;
+    height: 60px;
+    overflow: hidden;
+}
+.diamondsChild{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    position: absolute;
+    left: 0;
+    transition: 0.2s ease-in;
+}
+.diamond {
+    min-width: 60px;
+    min-height: 60px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+}
+#pointSpin{
+    width: 20px;
+}
+.blue { background: #2d7ff9; }
+.red { background: #ff4d4f; }
+.green { background: #28c76f; }
+
+.diamond img {
+    width: 50px;
+    height: 50px;
+}
+#containItems{
+    width: 350px;
+    min-height: 150px;
+    background-color: rgb(24 32 51);
+    border-radius: 12px;
+}
+
+
+
+.last-100-container {
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.last-100-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.last-100-title {
+    color: #6e7b97;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.last-100-circles {
+    /*display: flex;*/
+    /*gap: 6px;*/
+    width: 100%; /* ширина видимой области */
+    display: flex;
+    gap: 6px;
+    overflow: hidden; /* скрывает лишние кружки */
+    background: #1e2538;
+    padding: 8px;
+    border-radius: 12px;
+    transition: background 0.3s ease;
+}
+.last-100-circles .circle {
+    flex-shrink: 0;
+    width: 24px;
+    height: 12px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+.circle {
+    width: 20px;
+    height: 10px;
+    border-radius: 8px;
+}
+
+.circle.red { background: #ff4d4f; }
+.circle.blue { background: #2d7ff9; }
+.circle.green { background: #28c76f; }
+.circle.gray { background: #3c4355; }
+
+
+
+
+
+
+
+.game-container {
+    /*background: #121a2b;*/
+    padding: 20px;
+    border-radius: 16px;
+    width: 310px;
+    text-align: center;
+}
+
+.title {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.amount-box {
+    border-radius: 10px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 15px;
+    background-color: rgb(37 46 71);
+    border: 1px solid #134d64;
+    color: white;
+}
+
+.amount-box img {
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
+}
+
+.amount-value {
+    display: flex;
+    align-items: center;
+}
+
+.amount-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.amount-controls button {
+    background: #2a3146;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #cfd7f3;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.pick-buttons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.pick-btn {
+    flex: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pick-btn.blue { background: linear-gradient(135deg, #2a8cff, #1f6fe0); }
+.pick-btn.blue:hover { opacity: 0.85; }
+
+.pick-btn.green { background: linear-gradient(135deg, #3ecf5e, #28a745); }
+.pick-btn.green:hover { opacity: 0.85; }
+
+.pick-btn.red { background: linear-gradient(135deg, #ff5c5c, #e04141); }
+.pick-btn.red:hover { opacity: 0.85; }
+
+
+
+
+.card {
+    flex: 1;
+
+    border-radius: 12px;
+    padding: 5px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+
+}
+
+.card svg{
+    width: 44px;
+    display: inline-block;
+    line-height: 1em;
+    flex-shrink: 0;
+    color: currentcolor;
+    vertical-align: middle;
+    height: 22px;
+    fill: none;
+    position: absolute;
+    top: 4px;
+    right: 5px;
+}
+.card span{
+    position: relative;
+    z-index: 5;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: bold;
+}
+
+.icon {
+    font-size: 18px;
+}
+
+.card.blue { color: #2a8cff;     background: radial-gradient(61.22% 112.5% at 50% 100%, rgba(22, 177, 255, 0.16) 0%, rgba(56, 112, 227, 0) 100%), rgb(25, 32, 51);}
+.card.green { color: #3ecf5e; background: radial-gradient(61.22% 112.5% at 50% 100%, rgba(52, 238, 80, 0.16) 0%, rgba(36, 138, 61, 0) 100%), rgb(25, 32, 51);}
+.card.red {
+    color: #ff5c5c;
+    background: radial-gradient(61.22% 112.5% at 50% 100%, rgba(255, 105, 108, 0.16) 0%, rgba(255, 54, 59, 0) 100%), rgb(25, 32, 51);}
+.iconPerson{
+    width: 15px;
+    height: 15px;
+}
+.jCenter{
+    justify-content: center;
+}
+.align{
+    align-items: center;
+}
+.wallet {
+    width: calc(100% - 40px);
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    z-index: 10;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+    transform: translateY(100%);
+
+}
+.wallet.opened{
+
+    transform: translateY(0);
+}
+.balance {
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    gap: 12px;
+}
+
+.btn {
+    flex: 1;
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    border-radius: 14px;
+    padding: 14px;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.tx-item {
+    background: #fff;
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.tx-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tx-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--danger-bg);
+    color: var(--danger-text);
+    font-size: 16px;
+}
+
+.tx-name {
+    font-weight: 600;
+}
+
+.tx-amount {
+    font-weight: 700;
+    color: var(--danger-text);
+}
+
+.tx-date {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.close-btn {
+    width: 100%;
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    border-radius: 14px;
+    padding: 14px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin-top: 14px;
+}
+.textCenter{
+    text-align: center;
+}
+.disconnect {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 12px;
+    background: var(--danger-bg);
+    color: var(--danger-text);
+    font-weight: 500;
+    margin-bottom: 14px;
+    cursor: pointer;
+}
+#backdropBlur{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    z-index: 7;
+}
+.hide{
+    display: none;
+}
+#history{
+    max-height: 150px;
+    overflow-y: auto;
+}
+#inputGameBet{
+    width: 50px;
+    color: white;
+    background-color: transparent;
+}
+
+
+
+
+
+.open-btn {
+    background: linear-gradient(90deg, #00FF84, #00CFFF);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 14px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.open-btn:hover {
+    opacity: 0.85;
+}
+
+/* Popup */
+.popup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px); /* ✅ Размытие фона */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup-content {
+    background: #1a1a1a;
+    color: #fff;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s ease;
+    position: relative;
+}
+
+/* Закрыть (X) */
+#closeDeposit {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    color: #aaa;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#closeDeposit:hover {
+    color: #fff;
+}
+
+.popup-header {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.popup-subtext {
+    text-align: center;
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #ccc;
+}
+
+.input-box {
+    display: flex;
+    align-items: center;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    transition: 0.3s;
+}
+.input-box:focus-within {
+    border-color: #00CFFF;
+}
+.input-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+}
+.input-box span {
+    font-size: 16px;
+    color: #00CFFF;
+    margin-left: 6px;
+}
+
+.balance {
+    font-size: 13px;
+    color: #aaa;
+    text-align: right;
+    margin-bottom: 20px;
+}
+.balance span {
+    color: #00CFFF;
+    font-weight: bold;
+}
+
+.deposit-btn {
+    width: 100%;
+    background: linear-gradient(90deg, #00FF84, #00CFFF);
+    border: none;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    color: white;
+}
+.deposit-btn:hover {
+    opacity: 0.85;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+}
