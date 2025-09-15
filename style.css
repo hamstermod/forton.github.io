@@ -79,24 +79,25 @@ header{
     margin-bottom: 20px;
 }
 
-.diamond {
+.diamond{
     width: var(--diamond-size);
     height: var(--diamond-size);
     background-size: cover;
     background-position: center;
     border-radius: 50%;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transition: 1s;
 }
 
-.blue-diamond {
+.diamond.blue{
     background-image: url('/images/blueDiamond.png'); /* Replace with the actual path */
 }
 
-.red-diamond {
+.diamond.red {
     background-image: url('/images/redDiamond.png'); /* Replace with the actual path */
 }
 
-.green-diamond {
+.diamond.green{
     background-image: url('/images/greenDiamond.png'); /* Replace with the actual path */
 }
 .rolling-bar {
@@ -121,8 +122,10 @@ header{
 .diamonds {
     position: relative;
     height: 60px;
-    overflow: hidden;
+    /*overflow-x: hidden;*/
+    overflow-x: clip;
 }
+
 .diamondsChild{
     display: flex;
     align-items: center;
@@ -131,7 +134,7 @@ header{
     left: 0;
     transition: 0.2s ease-in;
 }
-.diamond {
+.diamond, .diamond2{
     min-width: 60px;
     min-height: 60px;
     border-radius: 10px;
@@ -139,13 +142,42 @@ header{
     align-items: center;
     justify-content: center;
     margin: 0 5px;
+    transition: 0.2s;
+
+
 }
+.winDiamond {
+    background-repeat: no-repeat;
+
+    background-size: 70px auto;
+    animation: winAnimDiamond 4s steps(96) infinite;
+}
+.winDiamond.blue {
+    background-image: url('/images/animateBlue.png');
+}
+.winDiamond.red {
+    background-image: url('/images/animateRed.png');
+}
+.winDiamond.green {
+    background-image: url('/images/animateGreen.png');
+}
+
+@keyframes winAnimDiamond {
+    from { background-position-y: 0px; }
+    to   { background-position-y: -6720px; }
+}
+
+
 #pointSpin{
     width: 20px;
 }
-.blue { background: #2d7ff9; }
-.red { background: #ff4d4f; }
-.green { background: #28c76f; }
+.blue { background-color: #2d7ff9 ; }
+.red { background-color: #ff4d4f ; }
+.green { background-color: #28c76f ; }
+
+#progress.blue { background-color: #2d7ff9 !important; }
+#progress.red { background-color: #ff4d4f !important; }
+#progress.green { background-color: #28c76f !important; }
 
 .diamond img {
     width: 50px;
@@ -206,10 +238,10 @@ header{
     border-radius: 8px;
 }
 
-.circle.red { background: #ff4d4f; }
-.circle.blue { background: #2d7ff9; }
-.circle.green { background: #28c76f; }
-.circle.gray { background: #3c4355; }
+.circle.red { background-color: #ff4d4f; }
+.circle.blue { background-color: #2d7ff9; }
+.circle.green { background-color: #28c76f; }
+.circle.gray { background-color: #3c4355; }
 
 
 
@@ -299,17 +331,20 @@ header{
 
 
 
+.cardBet, .card{
 
-.card {
-    flex: 1;
 
-    border-radius: 12px;
-    padding: 5px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
     overflow: hidden;
+}
+
+.card {
+    flex: 1;
+    padding: 5px 16px;
+    border-radius: 12px;
 
 }
 
@@ -342,9 +377,9 @@ header{
     font-size: 18px;
 }
 
-.card.blue { color: #2a8cff;     background: radial-gradient(61.22% 112.5% at 50% 100%, rgba(22, 177, 255, 0.16) 0%, rgba(56, 112, 227, 0) 100%), rgb(25, 32, 51);}
-.card.green { color: #3ecf5e; background: radial-gradient(61.22% 112.5% at 50% 100%, rgba(52, 238, 80, 0.16) 0%, rgba(36, 138, 61, 0) 100%), rgb(25, 32, 51);}
-.card.red {
+.card.blue, .userBetDiv.blue > div { color: #2a8cff;     background: radial-gradient(61.22% 112.5% at 50% 100%, rgba(22, 177, 255, 0.16) 0%, rgba(56, 112, 227, 0) 100%), rgb(25, 32, 51);}
+.card.green, .userBetDiv.green > div { color: #3ecf5e; background: radial-gradient(61.22% 112.5% at 50% 100%, rgba(52, 238, 80, 0.16) 0%, rgba(36, 138, 61, 0) 100%), rgb(25, 32, 51);}
+.card.red, .userBetDiv.red > div {
     color: #ff5c5c;
     background: radial-gradient(61.22% 112.5% at 50% 100%, rgba(255, 105, 108, 0.16) 0%, rgba(255, 54, 59, 0) 100%), rgb(25, 32, 51);}
 .iconPerson{
@@ -637,4 +672,142 @@ label {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px);}
     to { opacity: 1; transform: translateY(0);}
+}
+
+
+
+
+#profileBetsDiv > div{
+    width: calc(350px / 3);
+}
+.userBetDiv > div{
+    padding: 5px 10px;
+}
+.userBetDiv .tonIcon{
+    width: 20px;
+    height: 20px;
+    margin-right: 3px;
+}
+.userBetDiv .profileImg{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+.card2{
+    height: 50px;
+}
+.balanceBet{
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+.cardBet{
+    border-radius: 10px;
+    justify-content: space-around;
+    margin: 2px 0;
+}
+.userBetDiv{
+    background-color: transparent;
+    margin: 1px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+}
+.fullChild *{
+    width: 100%;
+    height: 100%;
+}
+.fuckingParentOfDiamond{
+    transform-origin: center center;
+    transition: transform 0.3s ease;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.disabledAllEffect > :not(.fullChild){
+    filter: brightness(0.5);
+}
+.userBetDiv.blue .cardBet{
+    border-left: 2px solid #00CFFF;
+}
+.userBetDiv.green .cardBet{
+    border-left: 2px solid #00FF84;
+}
+.userBetDiv.red .cardBet{
+    border-left: 2px solid #d90429;
+}
+.disabledEffect{
+    transition: 1s;
+    filter: brightness(0.5);
+}
+#progressText{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    color: white;
+}
+.progress{
+    border-radius: var(--border-radius);
+}
+
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 300px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-family: sans-serif;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    animation: fadeIn 0.3s ease;
+}
+
+.toast .iconToast {
+    margin-right: 10px;
+}
+
+.toast .close-btnToast {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.toast::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: rgba(255,255,255,0.7);
+    width: 100%;
+    animation: progressBar 5s linear forwards;
+}
+
+.toast.error    { background-color: #f44336; }
+.toast.warning  { background-color: #ffca28; color: #000; }
+.toast.info     { background-color: #2196f3; }
+.toast.success  { background-color: #4caf50; }
+@keyframes progressBar {
+    from { width: 100%; }
+    to   { width: 0%; }
 }

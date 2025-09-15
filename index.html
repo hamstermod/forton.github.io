@@ -23,7 +23,8 @@
         <div class="container">
            <div id="containItems">
                <div class="rolling-bar">
-                   <div class="progress">ROLLING IN 07.66</div>
+                   <p id="progressText" class="textCenter">ROLLING IN 07.66</p>
+                   <div class="progress" id="progress"></div>
                </div>
                <div class="flex jCenter" style="transform: translateY(10px); position: relative; z-index: 5">
 
@@ -31,34 +32,7 @@
                </div>
                <div class="diamonds">
                   <div class="diamondsChild" id="diamondsChild">
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond green"><img src="./images/greenDiamond.png" alt="Green Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond green"><img src="./images/greenDiamond.png" alt="Green Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond green"><img src="./images/greenDiamond.png" alt="Green Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond blue"><img src="./images/blueDiamond.png" alt="Blue Diamond"></div>
-                      <div class="diamond red"><img src="./images/redDiamond.png" alt="Red Diamond"></div>
-                      <div class="diamond green"><img src="./images/greenDiamond.png" alt="Green Diamond"></div>
+
                   </div>
 
                </div>
@@ -77,13 +51,13 @@
                     <div class="amount-value">
                         <img src="./images/tonIcon.png" alt="TON">
 
-                        <input type="number" value="0.1" id="inputGameBet"/>
+                        <input type="number" value="0.01" id="inputGameBet"/>
                     </div>
                     <div class="amount-controls">
-                        <button>Min</button>
-                        <button>1/2</button>
-                        <button>x2</button>
-                        <button>Max</button>
+                        <button id="minBut">Min</button>
+                        <button id="halfBut">1/2</button>
+                        <button id="x2But">x2</button>
+                        <button id="maxBut">Max</button>
                     </div>
                 </div>
 
@@ -118,7 +92,75 @@
                     </div>
                 </div>
             </div>
+            <div class="flex" style="width: 350px;" id="profileBetsDiv">
+                <div class="userBetDiv blue ">
+                    <div class="cardBet">
+                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
+                        <div class="card2">
+                            <div class="username">Hayk..</div>
+                            <div class="balanceBet">
+                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
+                                <span>0.01</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cardBet">
+                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
+                        <div class="card2">
+                            <div class="username">Hayk..</div>
+                            <div class="balanceBet">
+                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
+                                <span>0.01</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cardBet">
+                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
+                        <div class="card2">
+                            <div class="username">Hayk..</div>
+                            <div class="balanceBet">
+                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
+                                <span>0.01</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cardBet">
+                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
+                        <div class="card2">
+                            <div class="username">Hayk..</div>
+                            <div class="balanceBet">
+                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
+                                <span>0.01</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="userBetDiv green ">
+                    <div class="cardBet">
+                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
+                        <div class="card2">
+                            <div class="username">Hayk..</div>
+                            <div class="balanceBet">
+                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
+                                <span>0.01</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="userBetDiv red ">
+                    <div class="cardBet">
+                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
+                        <div class="card2">
+                            <div class="username">Hayk..</div>
+                            <div class="balanceBet">
+                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
+                                <span>0.01</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
         </div>
 
     </div>
@@ -238,6 +280,7 @@
             <button class="deposit-btn"><span class="popupText">deposit</span></button>
         </div>
     </div>
+    <div id="toast-container"></div>
     <script src="script.js" type="module"></script>
 </body>
 </html>
