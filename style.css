@@ -154,13 +154,13 @@ header{
     animation: winAnimDiamond 4s steps(96) infinite;
 }
 .winDiamond.blue {
-    background-image: url('/images/animateBlue.png');
+    background-image: url('https://hamstermod.github.io/forton.github.io/images/animateBlue.png');
 }
 .winDiamond.red {
-    background-image: url('/images/animateRed.png');
+    background-image: url('https://hamstermod.github.io/forton.github.io/images/animateRed.png');
 }
 .winDiamond.green {
-    background-image: url('/images/animateGreen.png');
+    background-image: url('https://hamstermod.github.io/forton.github.io/images/animateGreen.png');
 }
 
 @keyframes winAnimDiamond {
