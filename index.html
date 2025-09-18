@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css">
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <title>Forton</title>
 </head>
 <body>
@@ -14,7 +15,7 @@
             <img src="./images/logo.png" alt="" id="logo">
             <div class="flex align">
 
-                <span style="color: white; margin-right: 5px">10</span>
+                <span style="color: white; margin-right: 5px" class="balanceAmount">10</span>
                 <img src="./images/tonIcon.png" alt="TON" style="width: 25px; height: 25px; margin-right: 15px">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="" id="buttonWallet"><path d="M14.606 4C16.943 4 18.112 4 19.005 4.455C19.7901 4.85511 20.4283 5.49366 20.828 6.279C20.908 6.43633 20.9746 6.604 21.028 6.782H18.152C16.858 6.782 16.21 6.782 15.682 6.937C15.0675 7.11809 14.5082 7.45044 14.0553 7.90363C13.6025 8.35681 13.2706 8.91634 13.09 9.531C12.935 10.059 12.935 10.706 12.935 12C12.935 13.294 12.935 13.941 13.09 14.469C13.2708 15.0836 13.603 15.643 14.056 16.096C14.509 16.549 15.0684 16.8811 15.683 17.062C16.21 17.217 16.858 17.218 18.153 17.218H21.028C20.9746 17.3967 20.908 17.5643 20.828 17.721C20.4283 18.5063 19.7901 19.1449 19.005 19.545C18.112 20 16.943 20 14.605 20H9.17998C6.84198 20 5.67298 20 4.77998 19.545C3.99489 19.1445 3.35648 18.5061 2.95598 17.721C2.50098 16.828 2.50098 15.659 2.50098 13.321V10.68C2.50098 8.342 2.50098 7.173 2.95598 6.28C3.35631 5.49454 3.99474 4.85576 4.77998 4.455C5.67198 4 6.84098 4 9.17998 4H14.606ZM19.543 8.174C20.84 8.174 21.49 8.174 21.99 8.415C22.487 8.655 22.889 9.055 23.128 9.553C23.368 10.053 23.369 10.703 23.369 12C23.369 13.297 23.369 13.947 23.128 14.447C22.888 14.944 22.488 15.346 21.99 15.585C21.49 15.825 20.84 15.826 19.543 15.826H18.151C16.854 15.826 16.205 15.826 15.704 15.585C15.2069 15.3453 14.8057 14.9441 14.566 14.447C14.326 13.947 14.326 13.297 14.326 12C14.326 10.703 14.326 10.053 14.566 9.553C14.8057 9.05588 15.2069 8.65472 15.704 8.415C16.204 8.175 16.854 8.174 18.151 8.174H19.543ZM17.455 10.608C17.2722 10.6081 17.0913 10.6443 16.9225 10.7143C16.7538 10.7844 16.6005 10.887 16.4713 11.0163C16.3422 11.1456 16.2398 11.299 16.17 11.4679C16.1002 11.6368 16.0643 11.8178 16.0645 12.0005C16.0646 12.1832 16.1007 12.3642 16.1708 12.5329C16.2408 12.7017 16.3434 12.855 16.4727 12.9841C16.6021 13.1133 16.7555 13.2157 16.9244 13.2855C17.0933 13.3553 17.2742 13.3911 17.457 13.391C17.826 13.3907 18.1799 13.2439 18.4406 12.9827C18.7014 12.7216 18.8477 12.3675 18.8475 11.9985C18.8472 11.6295 18.7004 11.2756 18.4392 11.0149C18.1781 10.7541 17.824 10.6077 17.455 10.608Z" fill="white"></path></svg>
 
@@ -23,7 +24,7 @@
         <div class="container">
            <div id="containItems">
                <div class="rolling-bar">
-                   <p id="progressText" class="textCenter">ROLLING IN 07.66</p>
+                   <p id="progressText" class="textCenter">ROLLING IN 15.00</p>
                    <div class="progress" id="progress"></div>
                </div>
                <div class="flex jCenter" style="transform: translateY(10px); position: relative; z-index: 5">
@@ -38,7 +39,7 @@
                </div>
                <div class="last-100-container">
                    <div class="last-100-left">
-                       <div class="last-100-title">Last 100</div>
+                       <div class="last-100-title">Last 5</div>
                        <div class="last-100-circles">
                        </div>
                    </div>
@@ -62,9 +63,9 @@
                 </div>
 
                 <div class="pick-buttons">
-                    <button class="pick-btn blue">Pick 2x</button>
-                    <button class="pick-btn green">Pick 14x</button>
-                    <button class="pick-btn red">Pick 2x</button>
+                    <button class="pick-btn blue" id="blue2">Pick 2x</button>
+                    <button class="pick-btn green" id="green14">Pick 14x</button>
+                    <button class="pick-btn red" id="red2">Pick 2x</button>
                 </div>
             </div>
             <div class="flex" style="width: 350px;">
@@ -72,7 +73,7 @@
                     <svg viewBox="0 0 44 22" focusable="false" class="chakra-icon css-1qv758x" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_6774_11906)"><path stroke="url(#paint0_linear_6774_11906)" stroke-linejoin="round" stroke-width="4" d="M22.001 38.316L40.294 9.433C42.334 6.209 40.019 2 36.203 2H22m0 36.316V2m0 36.316L3.708 9.433C1.667 6.209 3.983 2 7.8 2h14.202"></path></g><defs><linearGradient id="paint0_linear_6774_11906" x1="41" x2="3" y1="2" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="currentColor" stop-opacity="0"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0.12"></stop></linearGradient><clipPath id="clip0_6774_11906"><path fill="#fff" d="M0 0H44V22H0z"></path></clipPath></defs></svg>
                     <div class="left">
                         <img class="iconPerson" src="images/bluePerson.svg" alt="blue person"/>
-                        <span>0</span>
+                        <span id="usersCountBlue">0</span>
                     </div>
                 </div>
 
@@ -80,7 +81,7 @@
                     <svg viewBox="0 0 44 22" focusable="false" class="chakra-icon css-1qv758x" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_6774_11906)"><path stroke="url(#paint0_linear_6774_11906)" stroke-linejoin="round" stroke-width="4" d="M22.001 38.316L40.294 9.433C42.334 6.209 40.019 2 36.203 2H22m0 36.316V2m0 36.316L3.708 9.433C1.667 6.209 3.983 2 7.8 2h14.202"></path></g><defs><linearGradient id="paint0_linear_6774_11906" x1="41" x2="3" y1="2" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="currentColor" stop-opacity="0"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0.12"></stop></linearGradient><clipPath id="clip0_6774_11906"><path fill="#fff" d="M0 0H44V22H0z"></path></clipPath></defs></svg>
                     <div class="left">
                         <img class="iconPerson" src="images/greenPerson.svg" alt="green person"/>
-                        <span>0</span>
+                        <span id="usersCountGreen">0</span>
                     </div>
                 </div>
 
@@ -88,76 +89,17 @@
                     <svg viewBox="0 0 44 22" focusable="false" class="chakra-icon css-1qv758x" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_6774_11906)"><path stroke="url(#paint0_linear_6774_11906)" stroke-linejoin="round" stroke-width="4" d="M22.001 38.316L40.294 9.433C42.334 6.209 40.019 2 36.203 2H22m0 36.316V2m0 36.316L3.708 9.433C1.667 6.209 3.983 2 7.8 2h14.202"></path></g><defs><linearGradient id="paint0_linear_6774_11906" x1="41" x2="3" y1="2" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="currentColor" stop-opacity="0"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0.12"></stop></linearGradient><clipPath id="clip0_6774_11906"><path fill="#fff" d="M0 0H44V22H0z"></path></clipPath></defs></svg>
                     <div class="left">
                         <img class="iconPerson" src="images/redPerson.svg" alt="red person"/>
-                        <span>0</span>
+                        <span id="usersCountRed">0</span>
                     </div>
                 </div>
             </div>
             <div class="flex" style="width: 350px;" id="profileBetsDiv">
                 <div class="userBetDiv blue ">
-                    <div class="cardBet">
-                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
-                        <div class="card2">
-                            <div class="username">Hayk..</div>
-                            <div class="balanceBet">
-                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
-                                <span>0.01</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cardBet">
-                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
-                        <div class="card2">
-                            <div class="username">Hayk..</div>
-                            <div class="balanceBet">
-                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
-                                <span>0.01</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cardBet">
-                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
-                        <div class="card2">
-                            <div class="username">Hayk..</div>
-                            <div class="balanceBet">
-                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
-                                <span>0.01</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cardBet">
-                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
-                        <div class="card2">
-                            <div class="username">Hayk..</div>
-                            <div class="balanceBet">
-                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
-                                <span>0.01</span>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="userBetDiv green ">
-                    <div class="cardBet">
-                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
-                        <div class="card2">
-                            <div class="username">Hayk..</div>
-                            <div class="balanceBet">
-                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
-                                <span>0.01</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="userBetDiv red ">
-                    <div class="cardBet">
-                        <img src="https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png" alt="" class="profileImg">
-                        <div class="card2">
-                            <div class="username">Hayk..</div>
-                            <div class="balanceBet">
-                                <img src="./images/tonIcon.png" alt="coin" class="tonIcon">
-                                <span>0.01</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -177,7 +119,7 @@
 
         <div class="balance">
             <img src="./images/tonIcon.png" alt="TON" style="width:25px;height:25px;margin-right:8px">
-            0
+            <span class="balanceAmount">0</span>
         </div>
 
 
@@ -198,7 +140,7 @@
              <div id="history">
                  <div class="tx-item">
                      <div class="tx-left">
-                         <div class="tx-icon">↑</div>
+                         <div class="iconCircle green"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-left h-4 w-4" data-lov-id="src/pages/Index.tsx:27:12" data-lov-name="ArrowDownLeft" data-component-path="src/pages/Index.tsx" data-component-line="27" data-component-file="Index.tsx" data-component-name="ArrowDownLeft" data-component-content="%7B%22className%22%3A%22h-4%20w-4%22%7D"><path d="M17 7 7 17"></path><path d="M17 17H7V7"></path></svg></div>
                          <div>
                              <div class="tx-name">Withdraw</div>
                              <div class="tx-date">2025-08-30 01:30</div>
@@ -262,6 +204,9 @@
 
         <button class="close-btn" id="closeWallet">Close</button>
     </div>
+    <div id="loading">
+
+    </div>
     <div class="popup" id="popup">
         <div class="popup-content">
             <button id="closeDeposit">×</button>
@@ -275,12 +220,13 @@
                 <img src="./images/tonIcon.png" alt="ton" style="width: 18px;"/>
             </div>
 
-            <div class="balance">Balance: <span>0.02 TON</span></div>
+            <div class="balance" id="feeBlock">Fee: <span id="fee">-</span> TON</div>
 
             <button class="deposit-btn"><span class="popupText">deposit</span></button>
         </div>
     </div>
     <div id="toast-container"></div>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script src="script.js" type="module"></script>
 </body>
 </html>

@@ -479,7 +479,13 @@ header{
     font-weight: 700;
     color: var(--danger-text);
 }
+.greenColor{
+    color: green !important;
+}
 
+#fee{
+    margin: 2px;
+}
 .tx-date {
     font-size: 12px;
     color: var(--muted);
@@ -810,4 +816,37 @@ label {
 @keyframes progressBar {
     from { width: 100%; }
     to   { width: 0%; }
+}
+
+
+.iconCircle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.iconCircle.green {
+    background-color: #22c55e;
+}
+
+.iconCircle.red {
+    background-color: #ef4444;
+}
+#loading{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-image: url("./images/loading.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: 90;
 }

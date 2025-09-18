@@ -25,13 +25,56 @@ const progressText = document.getElementById('progressText');
 const inputDepositOrWithdraw = document.getElementById('amount');
 const [blueBetParent, greenBetParent, redBetParent] = document.querySelectorAll(".userBetDiv");
 const colors = ['blue', 'red', 'blue', 'red', 'blue', 'red', 'green'];
-const totalDiamonds = 28; // всего элементов
-let userUIdata = {
-    user: {
-        id :1
+const blue2 = document.getElementById('blue2');
+const green14 = document.getElementById('green14');
+const red2 = document.getElementById('red2');
+const usersCountBlue = document.getElementById('usersCountBlue');
+const usersCountGreen = document.getElementById('usersCountGreen');
+const usersCountRed =  document.getElementById('usersCountRed');
+let userBalance = 0;
+const maxBut = document.getElementById('maxBut');
+const history = document.getElementById('history');
+const fee = document.getElementById('fee');
+const feeBlock = document.getElementById('feeBlock');
+const loading = document.getElementById('loading');
+setTimeout(() => {
+    loading.classList.add("hide")
+}, 2000)
+function parseQuery(query) {
+    const params = new URLSearchParams(query);
+    const result = {};
+
+    for (const [key, value] of params.entries()) {
+        result[key] = value;
     }
+
+    if (result.user) {
+        try {
+            result.user = JSON.parse(decodeURIComponent(result.user));
+        } catch (e) {
+            createMessage(text.errorParsing + " " + e, 0);
+            console.error("Ошибка при парсинге user JSON:", e);
+        }
+    }
+
+    return result;
 }
-// const diamondsChild = document.getElementById('diamondsChild');
+const search = Telegram.WebApp.initData ;
+const userUIdata = parseQuery(search);
+const socket = io("http://localhost:3000", {
+    query: {
+        init: search
+    }
+});
+socket.emit("balance");
+socket.emit("fullGameData");
+
+socket.on("disconnect", (e) => {
+    console.log("❗ Соединение с сервером потеряно");
+});
+
+
+const totalDiamonds = 28;
 const diamondsElms = [];
 for (let i = 0; i < totalDiamonds; i++) {
     const diamondParent = document.createElement('div');
@@ -62,7 +105,21 @@ function addNewCircle(color) {
         container.removeChild(container.firstElementChild);
     }
 }
+let usersBetBlue = 0;
+let usersBetGreen = 0;
+let usersBetRed = 0;
 function addUser(color, userData){
+    if(color === "blue"){
+        usersBetBlue++;
+        usersCountBlue.innerText = usersBetBlue;
+    } else if(color === "green"){
+        usersBetGreen++;
+        usersCountGreen.innerText = usersBetGreen;
+    } else{
+        usersBetRed++;
+        usersCountRed.innerText = usersBetRed;
+    }
+
     const elm = document.createElement('div');
     const img = document.createElement('img');
     img.src = userData.img;
@@ -77,6 +134,7 @@ function addUser(color, userData){
     tonImg.classList.add('tonIcon');
     tonImg.src = "./images/tonIcon.png";
     tonAmount.innerText = userData.ton;
+    tonAmount.className = "id" + userData.id;
     balanceBet.classList.add("balanceBet");
     balanceBet.appendChild(tonImg);
     balanceBet.appendChild(tonAmount);
@@ -99,7 +157,7 @@ function addUser(color, userData){
     redBetParent.appendChild(elm);
 
 }
-addUser("green", {username: "Hayk", ton: 21, img: "https://tonroll.com/static/media/userAvatar.c95e03b5dd1c0de60788.png"});
+
 function toNano(amount) {
     const parts = amount.toString().split('.');
     let nanoStr = parts[0] + (parts[1] ? parts[1].padEnd(9, '0').slice(0, 9) : '000000000');
@@ -180,32 +238,65 @@ function hexToRgb(hex) {
         b: bigint & 255
     };
 }
+function setTimer(timeLeftDate) {
+    const endTime = new Date(timeLeftDate).getTime();
+    const duration = 15; // для процента
 
-function setTimer(timeLeft) {
-
-    let duration = 15;
     const interval = setInterval(() => {
-        timeLeft -= 0.01;
-        const text =  timeLeft.toFixed(2);
-        progressText.innerText = "ROLLING IN " + (text.length < 5 ? "0" : '') + text;
-
-        let percent = (timeLeft / duration) * 100;
-        progressElm.style.width = percent + "%";
-
-        progressElm.style.background = getColorForPercent(percent);
+        const nowUTC = new Date().getTime();
+        let timeLeft = (endTime - nowUTC) / 1000;
 
         if (timeLeft <= 0) {
             clearInterval(interval);
             progressText.innerText = "ROLLING...";
             progressElm.style.width = "0%";
-            progressElm.style.background = "#c0392b";
+            progressElm.style.background = "#28c76f";
+            return;
         }
+
+        const text = timeLeft.toFixed(2);
+        progressText.innerText = "ROLLING IN " + (text.length < 5 ? "0" : '') + text;
+
+        let percent = (timeLeft / duration) * 100;
+        progressElm.style.width = percent + "%";
+        progressElm.style.background = getColorForPercent(percent);
     }, 10);
 }
-setTimer(15)
+
+// function setTimer(timeLeftDate) {
+//     // let nd = new Date();
+//     timeLeftDate = new Date(timeLeftDate);
+//     // текущее UTC время
+//     const nowUTC = new Date();
+//
+//     // разница в секундах
+//     let timeLeft = (timeLeftDate.getTime() - nowUTC.getTime()) / 1000;
+//     let duration = 15;
+//     // let timeLeft = (timeLeftDate - nd) / 1000;
+//     const interval = setInterval(() => {
+//         timeLeft -= 0.01;
+//         const text =  timeLeft.toFixed(2);
+//         progressText.innerText = "ROLLING IN " + (text.length < 5 ? "0" : '') + text;
+//
+//         let percent = (timeLeft / duration) * 100;
+//         progressElm.style.width = percent + "%";
+//
+//         progressElm.style.background = getColorForPercent(percent);
+//
+//         if (timeLeft <= 0) {
+//             clearInterval(interval);
+//             progressText.innerText = "ROLLING...";
+//             progressElm.style.width = "0%";
+//             progressElm.style.background = "#28c76f";
+//         }
+//     }, 10);
+// }
+// let next = new Date();
+// next.setSeconds(next.getSeconds() + 10);
+// setTimer(next)
 function spin(i, started, color) {
     const totalDuration = 3;
-    const delay = (new Date() - started) / 1000;
+    const delay = (new Date() - new Date(started)) / 1000;
     const remaining = totalDuration - delay;
     i += 17;
     i-=3;
@@ -264,7 +355,7 @@ function spin(i, started, color) {
                     progressText.innerText = `WIN ${color.toUpperCase()}`;
                     // progress.style.transition = "0s";
 
-
+                    socket.emit("balance");
 
                     setTimeout(() => {
                         child1.classList.add("hide");
@@ -279,7 +370,10 @@ function spin(i, started, color) {
                                diamondsChild.classList.remove("disabledAllEffect")
                                parent.classList.remove("fullChild");
                                progressElm.classList.remove(color);
-                               progressElm.style.transition = "1s ease";
+                               blueBetParent.classList.remove("disabledEffect");
+                               redBetParent.classList.remove("disabledEffect");
+                               greenBetParent.classList.remove("disabledEffect");
+                               // progressElm.style.transition = "1s ease";
                            }, 500)
                        }, 700)
                     }, 3300)
@@ -290,7 +384,7 @@ function spin(i, started, color) {
     }
 }
 const a = new Date();
-// spin(2, a, "blue");
+// spin(-1, a, "blue");
 // setInterval(() => {
 //     spin(2, a)
 // }, 2000)
@@ -317,15 +411,65 @@ buttonWallet.onclick = async  () => {
     const address = getWalletAddress();
     addressText.innerText = address.slice(0, 4) + "..." + address.slice(-4);
     backdropBlur.classList.remove('hide')
-    walletElm.classList.add("opened")
+    walletElm.classList.add("opened");
+    socket.emit("history");
 }
+let debounceTimeout;
 function openPopup(popupType= 0) { //0 deposit 1 withdraw
     popupText.forEach(e => {
         e.innerText = popupType ? "Withdraw" : "Deposit";
     })
     if(popupType){
+        depositBtn.disabled = "true";
+        depositBtn.classList.add("disabledEffect");
+        feeBlock.classList.remove("hide");
+        inputDepositOrWithdraw.oninput = async function(e) {
+            const value = +(e.target.value);
+            depositBtn.disabled = "true";
+            depositBtn.classList.add("disabledEffect");
+            if(value < 0.1){
+                return;
+            }
+            const address = getWalletAddress();
 
+            clearTimeout(debounceTimeout);
+
+            debounceTimeout = setTimeout(() => {
+                socket.emit('feeTransaction', { amount: value, address: address });
+
+            }, 1000);
+        };
+        depositBtn.onclick = async function () {
+            const amountInput = parseFloat(inputDepositOrWithdraw.value);
+            if (isNaN(amountInput) || amountInput < 0.1) {
+                showToast("info", "Minimum withdrawal is 0.1 TON. Please enter a valid amount.");
+                return;
+            }
+            if (!tonConnectUI.wallet) {
+                await tonConnectUI.openModal();
+                return;
+            }
+            if(amountInput > userBalance){
+                showToast("error", "Insufficient balance.\nYou don’t have enough TON to withdraw this amount.");
+                return;
+            }
+            const address = getWalletAddress();
+
+            socket.emit("withdraw", {
+                amount: amountInput,
+                address: address
+            });
+            socket.emit("balance");
+            setTimeout(function() {
+                socket.emit("history");
+            }, 1000)
+            closePopup();
+
+        }
     } else{
+        feeBlock.classList.add("hide");
+        depositBtn.disabled = "false";
+        depositBtn.classList.remove("disabledEffect");
         depositBtn.onclick = async function () {
             if (!tonConnectUI.connected) {
                 await tonConnectUI.connectWallet();
@@ -333,8 +477,8 @@ function openPopup(popupType= 0) { //0 deposit 1 withdraw
             }
 
             const amountInput = parseFloat(inputDepositOrWithdraw.value);
-            if (isNaN(amountInput) || amountInput < 0.01) {
-                showToast("info", "Minimum deposit is 0.01 TON. Please enter a valid amount.");
+            if (isNaN(amountInput) || amountInput < 0.1) {
+                showToast("info", "Minimum deposit is 0.1 TON. Please enter a valid amount.");
                 return;
             }
 
@@ -361,14 +505,16 @@ function openPopup(popupType= 0) { //0 deposit 1 withdraw
 
             try{
                 const result = await tonConnectUI.sendTransaction(transaction);
+                closePopup();
                 showToast("success", "Payment successful.\n Your deposit will be processed within 5 to 60 seconds.");
                 // closeDepositPage1.classList.add('hide');
-                // for(let i = 0; i < 10; i++){
-                //     setTimeout(() => {
-                //         socket.emit("deposit");
-                //         socket.emit("auth");
-                //     }, 2000 * i)
-                // }
+                for(let i = 0; i < 10; i++){
+                    setTimeout(() => {
+                        socket.emit("deposit");
+                        socket.emit("balance");
+                        socket.emit("history");
+                    }, 2000 * i)
+                }
             }catch(e){
                 showToast("error", "Payment rejected.\nSomething went wrong. Please try again later.");
             }
@@ -408,19 +554,138 @@ halfBut.onclick = () => {
 x2But.onclick = () => {
     inputGameBet.value =Math.min( Math.max(0.01, inputGameBet.value * 2), 100000);
 }
+maxBut.onclick = () => {
+    inputGameBet.value = userBalance;
+}
 inputGameBet.addEventListener('input', (e) => {
-    // let value = parseFloat(inputGameBet.value);
-    if(e.target.value.length === 0){
-        e.target.value = 0.01;
-    }
-    // console.log(e.target.value)
-    if(e.target.value.indexOf("-") !== -1){
-        e.target.value = e.target.value.replaceAll("-", "");
+    let value = e.target.value;
+
+    // Если пустое значение, ставим минимальное
+    if(value.length === 0){
+        e.target.value = "0.01";
+        return;
     }
 
+    // Убираем минусы
+    if(value.indexOf("-") !== -1){
+        value = value.replaceAll("-", "");
+    }
+
+    // Ограничиваем до двух цифр после запятой
+    if(value.includes(".")) {
+        const parts = value.split(".");
+        // Оставляем максимум 2 цифры после точки
+        parts[1] = parts[1].slice(0, 2);
+        value = parts.join(".");
+    }
+
+    inputGameBet.value = value;
 });
-// setInterval(() => {
-//     const colors = ['red', 'blue', 'green'];
-//     const randomColor = colors[Math.floor(Math.random() * colors.length)];
-//     addNewCircle(randomColor);
-// }, 1500);
+
+blue2.onclick = () => {
+    if(+(inputGameBet.value) > userBalance){
+        showToast("info", "Your balance is too low for this bet");
+        return;
+    }
+    socket.emit("bet",  {color: 1, bet: inputGameBet.value})// inputGameBet.value
+}
+green14.onclick = () => {
+    if(+(inputGameBet.value) > userBalance){
+        showToast("info", "Your balance is too low for this bet");
+        return;
+    }
+    socket.emit("bet",  {color: 2, bet: inputGameBet.value})// inputGameBet.value
+}
+red2.onclick = () => {
+    if(+(inputGameBet.value) > userBalance){
+        showToast("info", "Your balance is too low for this bet");
+        return;
+    }
+    socket.emit("bet",  {color: 3, bet: inputGameBet.value})// inputGameBet.value
+}
+socket.on("message", (e) => {
+    showToast(e.type, e.message);
+})
+socket.on("fullGameData", (e) => {
+    redBetParent.innerHTML = "";
+    blueBetParent.innerHTML = "";
+    greenBetParent.innerHTML = "";
+    usersBetRed = 0;
+    usersBetBlue = 0;
+    usersBetGreen = 0;
+    usersCountBlue.innerText = 0;
+    usersCountGreen.innerText = 0;
+    usersCountRed.innerText = 0;
+    if(e.last5){
+        e.last5.map((el) => {
+            addNewCircle(el)
+        })
+    }
+    setTimer(e.nextSpin)
+    e = e.bets;
+    const blue = Object.values(e.blueBets);
+    const green = Object.values(e.greenBets);
+    const red = Object.values(e.redBets);
+    blue.map((el) => {
+        addUser("blue", el)
+    })
+    green.map((el) => {
+        addUser("green", el)
+    })
+    red.map((el) => {
+        addUser("red", el)
+    })
+    // console.log(e)
+    // console.log(Object.values(blue))
+
+})
+socket.on("newBet", (e) => {
+    addUser(e.color, e)
+})
+// spin()
+socket.on("spin", (e) => {
+    spin(e.index, e.startSpin, e.color);
+})
+socket.on("history", (e) => {
+    let html = "";
+    e.map((el) => {
+        const date = new Date(el.created_at);
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // месяцы от 0
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        const formatted = `${year}-${month}-${day} ${hours}:${minutes}`;
+        html += ` <div class="tx-item">
+                     <div class="tx-left">
+                         ${el.type == 0 ? "<div class=\"iconCircle green\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-arrow-down-left h-4 w-4\" data-lov-id=\"src/pages/Index.tsx:27:12\" data-lov-name=\"ArrowDownLeft\" data-component-path=\"src/pages/Index.tsx\" data-component-line=\"27\" data-component-file=\"Index.tsx\" data-component-name=\"ArrowDownLeft\" data-component-content=\"%7B%22className%22%3A%22h-4%20w-4%22%7D\"><path d=\"M17 7 7 17\"></path><path d=\"M17 17H7V7\"></path></svg></div>": "<div class=\"iconCircle red\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-arrow-up-right h-4 w-4\" data-lov-id=\"src/pages/Index.tsx:19:12\" data-lov-name=\"ArrowUpRight\" data-component-path=\"src/pages/Index.tsx\" data-component-line=\"19\" data-component-file=\"Index.tsx\" data-component-name=\"ArrowUpRight\" data-component-content=\"%7B%22className%22%3A%22h-4%20w-4%22%7D\"><path d=\"M7 7h10v10\"></path><path d=\"M7 17 17 7\"></path></svg></div>"}
+                         <div>
+                             <div class="tx-name">${el.type == 0 ? "Deposit" : "Withdraw"}</div>
+                             <div class="tx-date">${formatted}</div>
+                         </div>
+                     </div>
+                     <div class="tx-amount ${el.type == 0 ? 'greenColor' : ''}">${el.type == 0 ? "+" : "-"}${el.amount} TON</div>
+                 </div>`
+    })
+    history.innerHTML = html;
+})
+socket.on("balance", (e) => {
+    const balances = document.querySelectorAll(".balanceAmount");
+   userBalance = e;
+    balances.forEach((e) => {
+        e.innerText = userBalance;
+    })
+})
+socket.on("updateFee", (e) => {
+    fee.innerText = e;
+    depositBtn.disabled = false;
+    depositBtn.classList.remove("disabledEffect");
+})
+socket.on("updateBet", (e) => {
+    const el = document.querySelector(`.userBetDiv.${e.color} .id${e.id}`)
+    if(el) {
+        el.innerText = e.ton;
+    }
+})
