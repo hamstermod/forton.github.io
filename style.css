@@ -90,15 +90,15 @@ header{
 }
 
 .diamond.blue{
-    background-image: url('/images/blueDiamond.png'); /* Replace with the actual path */
+    background-image:  url("https://hamstermod.github.io/forton.github.io/images/blueDiamond.png"); /* Replace with the actual path */
 }
 
 .diamond.red {
-    background-image: url('/images/redDiamond.png'); /* Replace with the actual path */
+    background-image:  url("https://hamstermod.github.io/forton.github.io/images/redDiamond.png"); /* Replace with the actual path */
 }
 
 .diamond.green{
-    background-image: url('/images/greenDiamond.png'); /* Replace with the actual path */
+    background-image: url("https://hamstermod.github.io/forton.github.io/images/greenDiamond.png"); /*url('/images/greenDiamond.png'); /* Replace with the actual path */
 }
 .rolling-bar {
     background: #1e2738;
