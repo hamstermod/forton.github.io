@@ -98,7 +98,8 @@ header{
 }
 
 .diamond.green{
-    background-image: url("https://hamstermod.github.io/forton.github.io/images/greenDiamond.png"); /*url('/images/greenDiamond.png'); /* Replace with the actual path */
+    background-image: url("https://hamstermod.github.io/forton.github.io/images/greenDiamond.png");
+    /*url('/images/greenDiamond.png'); /* Replace with the actual path */
 }
 .rolling-bar {
     background: #1e2738;

@@ -61,7 +61,7 @@ function parseQuery(query) {
 }
 const search = Telegram.WebApp.initData ;
 const userUIdata = parseQuery(search);
-const socket = io("http://localhost:3000", {
+const socket = io("https://serverforton-production.up.railway.app/", {
     query: {
         init: search
     }
@@ -468,7 +468,7 @@ function openPopup(popupType= 0) { //0 deposit 1 withdraw
         }
     } else{
         feeBlock.classList.add("hide");
-        depositBtn.disabled = "false";
+        depositBtn.disabled = false;
         depositBtn.classList.remove("disabledEffect");
         depositBtn.onclick = async function () {
             if (!tonConnectUI.connected) {
